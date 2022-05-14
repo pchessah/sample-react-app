@@ -15,4 +15,14 @@ function getAllLights() {
   });
 }
 
-export const LightsService = { getAllLights };
+function addLight(light: ILight) {
+  return new Promise((res, rej) => {
+    return db.collection("bulbs")
+      .add(light)
+      .then((docRef) => {
+        return res(docRef.id);
+      })
+  });
+}
+
+export const LightsService = { getAllLights, addLight };

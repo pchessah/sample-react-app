@@ -9,16 +9,13 @@ interface Props {}
 
 function Lights(props: Props) {
   const {} = props;
-
-
   const dispatch = useAppDispatch();
   const lightsState = useAppSelector((state) => state.lights);
 
   useEffect(() => {
     LightsService.getAllLights().then((val)=>{
      dispatch(getInitialState(val as ILight[]))
-    })
-    
+    })    
   })
 
   return (
