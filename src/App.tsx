@@ -1,11 +1,11 @@
-import './App.css';
-import Home from './pages/Home';
 import React from 'react';
+import './App.css';
+import LightsPage from './pages/lights.page';
 
 function App() {
   return (
     <>
-    <Home/>
+    <LightsPage/>
     </>
   
   );
