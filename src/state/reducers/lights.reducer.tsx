@@ -1,35 +1,28 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { User } from '../../model/user.model'
-import { RootState } from '../store/store'
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../store/store";
 
 interface AppLightsState {
-  value: {}
+  on: boolean;
 }
 
 const initialState: AppLightsState = {
-  value: []
-}
+  on: false,
+};
 
 export const LightsReducer = createSlice({
-  name: 'users',
+  name: "lights",
   initialState: initialState,
   reducers: {
-    // getUsers: (state, action: PayloadAction<User[]>) => {
-    //   state.value = action.payload
-    // },
+    toggleLight: (state: AppLightsState, action: PayloadAction<boolean>) => {
+      state.on = action.payload;
+    },
+    getInitialState: (state: AppLightsState) => {
+      state.on = initialState.on;
+    }
+  },
+});
 
-    // updateUser:(state, action: PayloadAction<User>) => {
-    //   debugger
-    //   const userToUpdate = state.value.find(user => user.id === action.payload.id);
-    //   if (userToUpdate) {
-    //     userToUpdate.name = action.payload.name;
-    //     debugger
-    //   }
-  }
-  }
-)
-
-// export const { getUsers, updateUser } = LightsReducer.actions
-// export const usersState = (state: RootState) => state.users;
+export const { toggleLight, getInitialState } = LightsReducer.actions
+export const lightsState = (state: RootState) => state.lights;
 
 export default LightsReducer.reducer;
