@@ -1,23 +1,25 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ILight } from "../../model/light.model";
 import { RootState } from "../store/store";
 
 interface AppLightsState {
-  on: boolean;
+  lights: ILight[];
 }
 
 const initialState: AppLightsState = {
-  on: false,
+  lights: [],
 };
 
 export const LightsReducer = createSlice({
   name: "lights",
   initialState: initialState,
   reducers: {
-    toggleLight: (state: AppLightsState, action: PayloadAction<boolean>) => {
-      state.on = action.payload;
+    toggleLight: (state: AppLightsState, action: PayloadAction<ILight>) => {
+      let lightToChange = state.lights.find((light) => light.id === action.payload.id);
+      lightToChange = action.payload;
     },
-    getInitialState: (state: AppLightsState) => {
-      state.on = initialState.on;
+    getInitialState: (state: AppLightsState, action: PayloadAction<ILight[]>) => {
+      state.lights = action.payload;
     }
   },
 });
