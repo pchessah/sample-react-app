@@ -3,13 +3,13 @@ import 'firebase/compat/firestore';
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDRa9N3Aa0k3GcYnbhTIFbQTqsvJ2tgyoc",
-  authDomain: "christmas-lights-787dd.firebaseapp.com",
-  projectId: "christmas-lights-787dd",
-  storageBucket: "christmas-lights-787dd.appspot.com",
-  messagingSenderId: "496318195272",
-  appId: "1:496318195272:web:7ea3febe44252715f7da7d",
-  measurementId: "G-8KZYYY82RD"
+  apiKey: "AIzaSyAjtKftLn-E_Wk-jeYzZD22IgmhqQ1blTQ",
+  authDomain: "christmas-lights-ecca5.firebaseapp.com",
+  projectId: "christmas-lights-ecca5",
+  storageBucket: "christmas-lights-ecca5.appspot.com",
+  messagingSenderId: "69733375674",
+  appId: "1:69733375674:web:a3cf16a393bb0d55782c83",
+  measurementId: "G-X26NF3PXWF"
 };
 
 // Initialize Firebase

@@ -1,24 +1,18 @@
 import React, { useState } from "react";
-import { Button, Modal, Select } from "antd";
+import { Button, Select } from "antd";
 import { ILight } from "../model/light.model";
 import { useAppDispatch } from "../state/hook";
-import { addLight } from "../state/reducers/lights.reducer";
+import { addLight, addLightToState } from "../state/reducers/lights.reducer";
 
 const { Option } = Select;
 
-interface Props {}
-
-function AddLightModal(props: Props) {
+function AddLightModal(props: any) {
   const dispatch = useAppDispatch();
 
   const [currentLightColor, setCurrentLightColor] = useState("#198754");
 
   function handleChange(value: string) {
     setCurrentLightColor(value);
-  }
-
-  function destroyAll() {
-    Modal.destroyAll();
   }
 
   const add=()=>{
@@ -28,8 +22,8 @@ function AddLightModal(props: Props) {
     } as ILight;
 
     dispatch(addLight(light));
-    destroyAll();
-
+    dispatch(addLightToState(light));
+    (props as any).onAdded(true); //Close modal after light has been added
   }
 
   const {} = props;

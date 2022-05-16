@@ -1,5 +1,5 @@
 import { Avatar } from "antd";
-import React, { useEffect, useState} from "react";
+import React, { useEffect} from "react";
 import { ILight } from "../model/light.model";
 import { LightsService } from "../services/lights.service";
 import { useAppDispatch, useAppSelector } from "../state/hook";
@@ -16,14 +16,14 @@ function Lights(props: Props) {
     LightsService.getAllLights().then((val)=>{
      dispatch(getInitialState(val as ILight[]))
     })    
-  })
+  }, []);
 
   return (
     <>
       <div className="container lights-row">
         <div className="lights-row-item">
           {lightsState.lights.map((light) => 
-            { return <Avatar key={light.id}/>}           
+            { return <Avatar style={{backgroundColor: `${light.on? light.color: "grey"}`}} className={light.on? 'blinking lights-row-item' : 'lights-row-item'} key={light.id}/>}           
           )}        
         </div>
    
