@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IAllLights } from "../../model/all-lights.model";
-import { ILight, IToggleAction } from "../../model/light.model";
+import { ILight, ILightPattern, IToggleAction } from "../../model/light.model";
 import { LightsService } from "../../services/lights.service";
 import { RootState } from "../store/store";
 
@@ -50,12 +50,21 @@ export const LightsReducer = createSlice({
     toggleAllLights(state: AppLightsState, action: PayloadAction<{toggleAction:IToggleAction}>) {
       state.allLights.on = action.payload.toggleAction === IToggleAction.on ? true : false;
       LightsService.toggleAllLights(state.allLights, action.payload.toggleAction);
+    },
+
+    togglePattern(state: AppLightsState, action: PayloadAction<ILightPattern>){
+      state.allLights.pattern = action.payload;
+      LightsService.togglePattern(state.allLights, action.payload);
+    },
+
+    togglePatternInState(state: AppLightsState, action: PayloadAction<ILightPattern>){
+      state.allLights.pattern = action.payload;
     }
 
   },
 });
 
-export const { toggleSingleLight, getInitialState , addLight, addLightToState, getInitialAllLightState, toggleAllLights} = LightsReducer.actions;
+export const {togglePatternInState, togglePattern, toggleSingleLight, getInitialState , addLight, addLightToState, getInitialAllLightState, toggleAllLights} = LightsReducer.actions;
 
 export const lightsState = (state: RootState) => state.lights;
 

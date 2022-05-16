@@ -6,6 +6,7 @@ import { getInitialAllLightState, toggleAllLights, toggleSingleLight } from "../
 import { LightsService } from "../services/lights.service";
 import { IAllLights } from "../model/all-lights.model";
 import { IToggleAction } from "../model/light.model";
+import ChangePatternModal from "./change-pattern-modal.component";
 
 interface Props {}
 
@@ -15,6 +16,7 @@ function LightsControlMenu(props: Props) {
   const allLightsState = useAppSelector((state) => state.lights.allLights);
   const dispatch = useAppDispatch();
   const [isAddBulbModalVisible, setIsAddBulbModalVisible] = useState(false);
+  const [isChangePatternModalVisible, setIsChangePatternModalVisible] = useState(false);
 
 
   function toggleLight(checked: boolean) {
@@ -32,12 +34,18 @@ function LightsControlMenu(props: Props) {
     setIsAddBulbModalVisible(true);
   }
 
+  function changePattern(){
+    setIsChangePatternModalVisible(true);
+  }
+
   const handleOk = () => {
     setIsAddBulbModalVisible(false);
+    setIsChangePatternModalVisible(false);
   };
 
   const handleCancel = () => {
     setIsAddBulbModalVisible(false);
+    setIsChangePatternModalVisible(false);
   };
 
   useEffect(() => {
@@ -56,7 +64,7 @@ function LightsControlMenu(props: Props) {
                   extra={[
                     <Switch checked={allLightsState.on} onChange={toggleLight} />,
                     <Button onClick={addBulb} key="2">Add Bulb</Button>,
-                    <Button key="3">Change Pattern</Button>,
+                    <Button onClick={changePattern} key="3">Change Pattern</Button>,
                     <Button key="1" danger>
                       Remove Bulb
                     </Button>,
@@ -70,6 +78,16 @@ function LightsControlMenu(props: Props) {
                     </Button>}
              onCancel={handleCancel}>
         <AddLightModal onAdded={handleOk} />
+      </Modal>
+
+      <Modal title="Change Pattern"
+             visible={isChangePatternModalVisible}
+             footer={<Button onClick={handleCancel}>
+             Cancel
+            </Button>}
+            onCancel={handleCancel}>
+     <ChangePatternModal onChanged={handleOk} />
+
       </Modal>
     </>
   );

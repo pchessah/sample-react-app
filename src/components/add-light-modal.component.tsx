@@ -15,7 +15,7 @@ function AddLightModal(props: any) {
     setCurrentLightColor(value);
   }
 
-  const add=()=>{
+  const add = () => {
     const light = {
       on: false,
       color: currentLightColor,
@@ -24,21 +24,25 @@ function AddLightModal(props: any) {
     dispatch(addLight(light));
     dispatch(addLightToState(light));
     (props as any).onAdded(true); //Close modal after light has been added
-  }
+  };
 
   const {} = props;
 
   return (
     <>
-    <div className="light-selector">
-      <Select defaultValue="#198754"
-              style={{ width: 120 }}
-              onChange={handleChange}>
-        <Option value="#198754">Green</Option>
-        <Option value="#FF0000">Red</Option>
-      </Select>
-      <Button onClick={add} className="light-submit" type="primary">Add Light</Button>
-    </div>
+      <div className="light-selector">
+        <Select
+          defaultValue="#198754"
+          style={{ width: 120 }}
+          onChange={handleChange}
+        >
+          <Option value="#198754">Green</Option>
+          <Option value="#FF0000">Red</Option>
+        </Select>
+        <Button onClick={add} className="light-submit" type="primary">
+          Add Light
+        </Button>
+      </div>
     </>
   );
 }

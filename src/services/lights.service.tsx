@@ -1,5 +1,5 @@
 import { IAllLights } from "../model/all-lights.model";
-import { ILight, IToggleAction } from "../model/light.model";
+import { ILight, ILightPattern, IToggleAction } from "../model/light.model";
 import { db } from "../utils/firestore";
 
 
@@ -45,7 +45,7 @@ function toggleAllLights(allLightsState: IAllLights, toggleAction: IToggleAction
   });
 }
 
-function togglePattern(allLightsState: IAllLights, pattern: number) {
+function togglePattern(allLightsState: IAllLights, pattern: ILightPattern) {
   return new Promise((res, rej) => {
     return db
       .collection("all-lights")
