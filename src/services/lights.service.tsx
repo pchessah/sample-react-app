@@ -1,5 +1,5 @@
 import { IAllLights } from "../model/all-lights.model";
-import { ILight } from "../model/light.model";
+import { ILight, IToggleAction } from "../model/light.model";
 import { db } from "../utils/firestore";
 
 
@@ -30,17 +30,17 @@ function getInitialAllLightsState(){
   });
 }
 
-function toggleAllLightsOn(allLightsState: IAllLights, toggleAction: 'on' | 'off')
+function toggleAllLights(allLightsState: IAllLights, toggleAction: IToggleAction)
 {
   return new Promise((res, rej) => {
     return db
       .collection("all-lights")
       .doc('1')
       .update({
-        on:toggleAction === 'on' ? true : false,
+        on:toggleAction === IToggleAction.on ? true : false,
       })
       .then(() => {
-        return res(allLightsState);
+        return res(true);
       });
   });
 }
@@ -54,7 +54,7 @@ function togglePattern(allLightsState: IAllLights, pattern: number) {
         pattern: pattern,
       })
       .then(() => {
-        return res(allLightsState);
+        return res(true);
       });
   });
 }
@@ -103,11 +103,11 @@ function switchOffLight(light: ILight) {
   });
 }
 
-function toggleLight(light: ILight, toggleAction: "on" | "off") {
+function toggleLight(light: ILight, toggleAction: IToggleAction) {
   switch (toggleAction) {
-    case "on":
+    case IToggleAction.on:
       return switchOnLight(light);
-    case "off":
+    case IToggleAction.off:
       return switchOffLight(light);     
     default:
       throw new Error("Invalid toggle action");
@@ -121,6 +121,6 @@ export const LightsService = {
   switchOffLight,
   toggleLight,
   getInitialAllLightsState,
-  toggleAllLightsOn,
+  toggleAllLights,
   togglePattern
 };

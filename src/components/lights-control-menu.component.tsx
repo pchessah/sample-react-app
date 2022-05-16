@@ -1,24 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PageHeader, Button, Switch, Modal} from "antd";
 import AddLightModal from "./add-light-modal.component";
 import { useAppDispatch, useAppSelector } from "../state/hook";
-import { toggleSingleLight } from "../state/reducers/lights.reducer";
+import { getInitialAllLightState, toggleAllLights, toggleSingleLight } from "../state/reducers/lights.reducer";
+import { LightsService } from "../services/lights.service";
+import { IAllLights } from "../model/all-lights.model";
+import { IToggleAction } from "../model/light.model";
 
 interface Props {}
 
 function LightsControlMenu(props: Props) {
   const {} = props;
   const lightsState = useAppSelector((state) => state.lights);
+  const allLightsState = useAppSelector((state) => state.lights.allLights);
   const dispatch = useAppDispatch();
   const [isAddBulbModalVisible, setIsAddBulbModalVisible] = useState(false);
 
 
   function toggleLight(checked: boolean) {
-    let toggleAction = checked ? 'on' : 'off';
+    const toggleAction: IToggleAction = checked ? IToggleAction.on : IToggleAction.off;
+
     lightsState.lights.map(light => {
-      const payLoad = { light: light, toggleAction: toggleAction as 'on' | 'off'}
-      dispatch(toggleSingleLight(payLoad));      
-    });   
+      const payLoad = { light: light, toggleAction: toggleAction}
+      dispatch(toggleSingleLight(payLoad));
+    });
+    
+    dispatch(toggleAllLights({toggleAction}))
   }
 
   function addBulb(){
@@ -33,6 +40,12 @@ function LightsControlMenu(props: Props) {
     setIsAddBulbModalVisible(false);
   };
 
+  useEffect(() => {
+    LightsService.getInitialAllLightsState().then((val)=>{
+      dispatch(getInitialAllLightState(val as IAllLights));
+    })
+  }, [])
+
 
   return (
     <>
@@ -41,7 +54,7 @@ function LightsControlMenu(props: Props) {
                   title="🎄Christmass Lights🎄"
                   subTitle=""
                   extra={[
-                    <Switch onChange={toggleLight} />,
+                    <Switch checked={allLightsState.on} onChange={toggleLight} />,
                     <Button onClick={addBulb} key="2">Add Bulb</Button>,
                     <Button key="3">Change Pattern</Button>,
                     <Button key="1" danger>

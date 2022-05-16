@@ -3,3 +3,8 @@ export type ILight = {
   on: boolean;
   color: string;
 }
+
+export enum IToggleAction {
+  'on',
+  'off',
+}
