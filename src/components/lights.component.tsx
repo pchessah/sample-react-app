@@ -53,7 +53,7 @@ function Lights(props: Props) {
             { return (
               <>
               <div className="lights-container">
-              <Button onClick={() => editBulb(light.id)}> Edit Bulb `${index +1}`</Button>
+              <Button onClick={() => editBulb(light.id)}> Edit Bulb : {index +1}</Button>
                   <Avatar style={{backgroundColor: `${allLightsState.on ? light.on? light.color: "grey" : "grey"}`}}
                              className={allLightsState.on ? 
                                         light.on?
