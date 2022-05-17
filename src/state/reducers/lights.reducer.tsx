@@ -46,6 +46,14 @@ export const LightsReducer = createSlice({
       state.lights = action.payload;
     },
 
+    deleteSingleLight(state:AppLightsState, action: PayloadAction<ILight>) {
+      const lightToDelete = state.lights.find(light => light.id === action.payload.id)
+      if (lightToDelete) {
+        LightsService.removeSingleBulb(lightToDelete)
+        state.lights = state.lights.filter(light => light.id !== action.payload.id)
+      }
+    },
+
     addLight: (state: AppLightsState, action: PayloadAction<ILight>) => {
       LightsService.addLight(action.payload).then((val)=>{ });
     },
@@ -83,7 +91,7 @@ export const {toggleSingleLightColorChange,
               addLight,
               addLightToState,
               getInitialAllLightState,
-              toggleAllLights} = LightsReducer.actions;
+              toggleAllLights, deleteSingleLight} = LightsReducer.actions;
 
 export const lightsState = (state: RootState) => state.lights;
 

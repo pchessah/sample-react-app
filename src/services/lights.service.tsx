@@ -3,7 +3,6 @@ import { ILight, ILightPattern, IToggleAction } from "../model/light.model";
 import { db } from "../utils/firestore";
 
 
-
 function getAllLights() {
   return new Promise((res, rej) => {
     return db
@@ -73,6 +72,19 @@ function togglePattern(allLightsState: IAllLights, pattern: ILightPattern) {
   });
 }
 
+function removeSingleBulb(light:ILight){
+  return new Promise((res, rej) => {
+    return db
+      .collection("bulbs")
+      .doc(light.id)
+      .delete()
+      .then(() => {
+        return res(true);
+      });
+    });
+
+}
+
 function addLight(light: ILight) {
   
   return new Promise((res, rej) => {
@@ -82,8 +94,7 @@ function addLight(light: ILight) {
       .collection("bulbs")
       .doc(id)
       .set(lightToAdd)
-      .then((val) => {
-     
+      .then((val) => {     
         return res(lightToAdd);
       });
   });
@@ -137,5 +148,6 @@ export const LightsService = {
   getInitialAllLightsState,
   toggleAllLights,
   togglePattern,
-  toggleColorChange
+  toggleColorChange,
+  removeSingleBulb
 };

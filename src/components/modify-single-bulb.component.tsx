@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import { Button, Select } from "antd";
 import { useAppDispatch } from "../state/hook";
-import { ILight, ILightPattern, IToggleAction } from "../model/light.model";
-import { toggleSingleLight, toggleSingleLightColorChange } from "../state/reducers/lights.reducer";
-
-interface Props {}
+import { ILight, IToggleAction } from "../model/light.model";
+import { deleteSingleLight, toggleSingleLight, toggleSingleLightColorChange } from "../state/reducers/lights.reducer";
 
 const { Option } = Select;
 
 function ModifySingleBulbModalComponent(props: any) {
-const [currentLightState, setCurrentLightState] = useState({} as ILight);
+
 const [bulbToModify, setBulbToModify] = useState<ILight | null>(props.bulbToModify);
 
   const dispatch = useAppDispatch();
@@ -32,6 +30,7 @@ const [bulbToModify, setBulbToModify] = useState<ILight | null>(props.bulbToModi
   }
 
   const removeBulb = () => {
+    dispatch(deleteSingleLight(bulbToModify));
     closeModalAfterAction();
   }
 
