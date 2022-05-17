@@ -1,7 +1,5 @@
-import { Post } from "./post.model";
-import { User } from "./user.model";
+import { ILight } from "./light.model";
 
-export type AppState ={
-  users: User[];
-  posts: Post[];
+export type AppState = {
+  lights: ILight[];
 }
