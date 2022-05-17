@@ -76,7 +76,7 @@ function Lights(props: Props) {
              Cancel
             </Button>}
             onCancel={handleCancel}>
-     <ModifySingleBulbModalComponent bulbToModify={bulbToModify} onChanged={handleOk} />
+     <ModifySingleBulbModalComponent bulbToModify={bulbToModify} onClosed={handleOk} />
      </Modal>
     </>
   );

@@ -31,6 +31,17 @@ export const LightsReducer = createSlice({
       }     
     },
 
+    toggleSingleLightColorChange(state:AppLightsState, action: PayloadAction<{light:ILight, color:string}>) {
+      const lightToChange = state.lights.find(light => light.id === action.payload.light.id)
+      if (lightToChange) {
+        lightToChange.color = action.payload.color;
+    
+        LightsService.toggleColorChange(action.payload.light, action.payload.color)
+      } else {
+        throw new Error(`Light with id ${action.payload.light.id} not found`);
+      }
+    },
+
     getInitialState: (state: AppLightsState, action: PayloadAction<ILight[]>) => {
       state.lights = action.payload;
     },
@@ -64,7 +75,15 @@ export const LightsReducer = createSlice({
   },
 });
 
-export const {togglePatternInState, togglePattern, toggleSingleLight, getInitialState , addLight, addLightToState, getInitialAllLightState, toggleAllLights} = LightsReducer.actions;
+export const {toggleSingleLightColorChange,
+              togglePatternInState,
+              togglePattern,
+              toggleSingleLight,
+              getInitialState,
+              addLight,
+              addLightToState,
+              getInitialAllLightState,
+              toggleAllLights} = LightsReducer.actions;
 
 export const lightsState = (state: RootState) => state.lights;
 

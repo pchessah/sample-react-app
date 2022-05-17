@@ -45,6 +45,20 @@ function toggleAllLights(allLightsState: IAllLights, toggleAction: IToggleAction
   });
 }
 
+function toggleColorChange(lightToChange: ILight, color:string){
+  return new Promise((res, rej) => {
+    return db
+      .collection("bulbs")
+      .doc(lightToChange.id)
+      .update({
+        color: color,
+      })
+      .then(() => {
+        return res(true);
+      });
+  });
+}
+
 function togglePattern(allLightsState: IAllLights, pattern: ILightPattern) {
   return new Promise((res, rej) => {
     return db
@@ -122,5 +136,6 @@ export const LightsService = {
   toggleLight,
   getInitialAllLightsState,
   toggleAllLights,
-  togglePattern
+  togglePattern,
+  toggleColorChange
 };

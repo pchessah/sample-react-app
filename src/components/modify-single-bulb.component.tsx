@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Select } from "antd";
 import { useAppDispatch } from "../state/hook";
 import { ILight, ILightPattern, IToggleAction } from "../model/light.model";
-import { toggleSingleLight } from "../state/reducers/lights.reducer";
+import { toggleSingleLight, toggleSingleLightColorChange } from "../state/reducers/lights.reducer";
 
 interface Props {}
 
@@ -25,9 +25,10 @@ const [bulbToModify, setBulbToModify] = useState<ILight | null>(props.bulbToModi
   }
 
   function handleColorChange(color: string){
-    let light = bulbToModify;
-    light.color = color;
+    const light = { on: bulbToModify.on, id: bulbToModify.id, color: color } as ILight;
     setBulbToModify(light);
+    const payLoad = { light: bulbToModify, color: color}
+    dispatch(toggleSingleLightColorChange(payLoad));
   }
 
   const removeBulb = () => {
@@ -66,8 +67,8 @@ const [bulbToModify, setBulbToModify] = useState<ILight | null>(props.bulbToModi
             </Button>
          </div>
       
-        <Button className="light-submit" type="primary">
-          Submit
+        <Button onClick={closeModalAfterAction} className="light-submit" type="primary">
+          Done
         </Button>
       </div>
     </>
