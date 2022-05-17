@@ -59,15 +59,12 @@ function LightsControlMenu(props: Props) {
     <>
       <PageHeader ghost={false}
                   onBack={() => window.history.back()}
-                  title="🎄Christmass Lights🎄"
+                  title="🎄Christmas Lights🎄"
                   subTitle=""
                   extra={[
                     <Switch checked={allLightsState.on} onChange={toggleLight} />,
                     <Button onClick={addBulb} key="2">Add Bulb</Button>,
-                    <Button onClick={changePattern} key="3">Change Pattern</Button>,
-                    <Button key="1" danger>
-                      Remove Bulb
-                    </Button>,
+                    <Button onClick={changePattern} key="3">Change Pattern</Button>
                   ]}>
       </PageHeader>
 

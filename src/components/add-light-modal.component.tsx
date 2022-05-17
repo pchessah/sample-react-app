@@ -31,11 +31,9 @@ function AddLightModal(props: any) {
   return (
     <>
       <div className="light-selector">
-        <Select
-          defaultValue="#198754"
-          style={{ width: 120 }}
-          onChange={handleChange}
-        >
+        <Select defaultValue="#198754"
+                style={{ width: 120 }}
+                onChange={handleChange} >
           <Option value="#198754">Green</Option>
           <Option value="#FF0000">Red</Option>
         </Select>

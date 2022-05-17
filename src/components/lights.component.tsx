@@ -11,6 +11,8 @@ interface Props {}
 
 function Lights(props: Props) {
   const [isModifyBulbModalVisible, setIsModifyBulbModalVisible] = useState(false);
+  const [bulbToModify, setBulbToModify] = useState<ILight | null>(null);
+
   const {} = props;
   const dispatch = useAppDispatch();
   const lightsState = useAppSelector((state) => state.lights);
@@ -19,14 +21,16 @@ function Lights(props: Props) {
 
   const handleOk = () => {
     setIsModifyBulbModalVisible(false);
-;
   };
 
   const handleCancel = () => {
     setIsModifyBulbModalVisible(false);
-;
   };
 
+  const editBulb = (id: string) => {
+    setBulbToModify(lightsState.lights.find((light) => light.id === id));
+    setIsModifyBulbModalVisible(true);
+  }
 
   useEffect(() => {
     LightsService.getAllLights().then((val)=>{
@@ -48,7 +52,8 @@ function Lights(props: Props) {
           {lightsState.lights.map((light, index) => 
             { return (
               <>
-              <Button> Edit Bulb `${index +1}`</Button>
+              <div className="lights-container">
+              <Button onClick={() => editBulb(light.id)}> Edit Bulb `${index +1}`</Button>
                   <Avatar style={{backgroundColor: `${allLightsState.on ? light.on? light.color: "grey" : "grey"}`}}
                              className={allLightsState.on ? 
                                         light.on?
@@ -57,6 +62,7 @@ function Lights(props: Props) {
                                         allLightsState.pattern == 2 ?
                                         'blinking_2 lights-row-item'  :'lights-row-item' :'lights-row-item': 'lights-row-item'} 
                              key={light.id}/>
+                             </div>
               </>
             )
         }           
@@ -70,7 +76,7 @@ function Lights(props: Props) {
              Cancel
             </Button>}
             onCancel={handleCancel}>
-     <ModifySingleBulbModalComponent onChanged={handleOk} />
+     <ModifySingleBulbModalComponent bulbToModify={bulbToModify} onChanged={handleOk} />
      </Modal>
     </>
   );
