@@ -24,6 +24,7 @@ const [bulbToModify, setBulbToModify] = useState<ILight | null>(props.bulbToModi
 
   function handleColorChange(color: string){
     const light = { on: bulbToModify.on, id: bulbToModify.id, color: color } as ILight;
+    debugger
     setBulbToModify(light);
     const payLoad = { light: bulbToModify, color: color}
     dispatch(toggleSingleLightColorChange(payLoad));
